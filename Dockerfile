@@ -23,14 +23,17 @@ mkdir /App
 #Setup site.conf and app
 COPY . /App
 COPY lychee.conf /etc/apache2/sites-available/lychee.conf
-RUN  \
-mkdir /var/www/lychee && \
-cp /App/* /var/www/lychee/ && \
-chown -R www-data:www-data /var/www/lychee/
+
+RUN  mkdir /var/www/lychee && \
+cp -r /App/* /var/www/lychee/ && \
+chown -R www-data:www-data /var/www/lychee/ && \
+chmod -R 777 /var/www/lychee/uploads /var/www/lychee/data
 
 #edit php.ini
 RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/apache2/php.ini && \
-sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php5/apache2/php.ini
+sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php5/apache2/php.ini && \
+sed -i -e "s/max_execution_time\s*=\s*30/max_execution_time = 200/g" /etc/php5/apache2/php.ini && \
+sed -i -e "s/memory_limit\s*=\s*128M/memory_limit = 256M/g" /etc/php5/apache2/php.ini
 
 #Load apache module
 RUN a2enmod rewrite \
