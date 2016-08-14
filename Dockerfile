@@ -40,11 +40,10 @@ RUN a2enmod rewrite \
  && ln -s /etc/apache2/sites-available/lychee.conf /etc/apache2/sites-enabled/lychee.conf
 
 #Cleaning
-RUN rm /etc/apache2/sites-enabled/000-default.conf \
- && rm lychee_Installer.zip \
- && rm -rf /App \
- && apt-get clean \
- && service apache2 restart
+RUN rm /etc/apache2/sites-enabled/000-default.conf && \
+rm -rf /App && \
+apt-get clean && \
+service apache2 restart
 
 
 WORKDIR /var/www/lychee
