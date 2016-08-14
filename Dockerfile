@@ -47,8 +47,9 @@ sed -i -e "s/memory_limit\s*=\s*128M/memory_limit = $PHP_MEMORY_LIMIT/g" /etc/ph
 # sed -i -e "s/$dbName =\s*''/$dbName = '$MYSQL_DB_NAME'/g" /var/www/leechy/data/config.php
 
 #Load apache module
-RUN a2enmod rewrite \
- && ln -s /etc/apache2/sites-available/lychee.conf /etc/apache2/sites-enabled/lychee.conf
+RUN a2enmod rewrite && \
+ln -s /etc/apache2/sites-available/lychee.conf /etc/apache2/sites-enabled/lychee.conf && \
+echo "serverName localhost" >> /etc/apache2/apache2.conf
 
 #Cleaning
 RUN rm /etc/apache2/sites-enabled/000-default.conf && \
