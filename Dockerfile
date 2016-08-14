@@ -42,9 +42,9 @@ sed -i -e "s/memory_limit\s*=\s*128M/memory_limit = $PHP_MEMORY_LIMIT/g" /etc/ph
 
 #edit config.php
 RUN  sed -i -e "s/$dbHost =\s*''/$dbHost = '$MYSQL_HOST'/g" /var/www/leechy/data/config.php && \
-sed -i -e "s/$dbUser =\s*''/$dbUser =  'MYSQL_USERNAME'/g" /var/www/leechy/data/config.php && \
+sed -i -e "s/$dbUser =\s*''/$dbUser =  '$MYSQL_USERNAME'/g" /var/www/leechy/data/config.php && \
 sed -i -e "s/$dbPassword =\s*''/$dbPassword = '$MYSQL_PASSWORD'/g" /var/www/leechy/data/config.php && \
-sed -i -e "s/$dbName =\s*''/$dbName = 'MYSQL_DB_NAME'/g" /var/www/leechy/data/config.php
+sed -i -e "s/$dbName =\s*''/$dbName = '$MYSQL_DB_NAME'/g" /var/www/leechy/data/config.php
 
 #Load apache module
 RUN a2enmod rewrite \
