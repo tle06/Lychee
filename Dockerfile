@@ -18,7 +18,7 @@ nano \
 wget \
 unzip \
 apache2 \
-php-5 \
+php5 \
 php5-cli \
 php5-gd \
 php5-common \
