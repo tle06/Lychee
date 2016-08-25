@@ -21,7 +21,7 @@ apache2 \
 php5-cli \
 php5-gd \
 php5-common \
-php5-mysql
+php5-mysql \
 php5-curl && \
 rm -rf /var/lib/apt/lists/* && \
 mkdir /App
