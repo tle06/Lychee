@@ -18,9 +18,10 @@ nano \
 wget \
 unzip \
 apache2 \
-libapache2-mod-php5 \
-php5-fpm \
-php5-mysql \
+php5-cli \
+php5-gd \
+php5-common \
+php5-mysql
 php5-curl && \
 rm -rf /var/lib/apt/lists/* && \
 mkdir /App
