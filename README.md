@@ -2,7 +2,7 @@
 
 [![](https://images.microbadger.com/badges/version/tlnk/lychee.svg)](https://microbadger.com/images/tlnk/lychee "Get your own version badge on microbadger.com")
 
-# lychee
+# Lychee
 
 ![Screenshot](https://camo.githubusercontent.com/89386c42bade1e05e9de57d8d4f74bee699ffeab/687474703a2f2f6c2e656c6563746572696f75732e636f6d2f75706c6f6164732f6269672f63346235386362383764393561656165643738666463613538316363393038632e6a7067)
 
