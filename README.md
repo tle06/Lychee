@@ -1,76 +1,93 @@
-# Lychee
+[![](https://images.microbadger.com/badges/image/tlnk/lychee.svg)](https://microbadger.com/images/tlnk/lychee "Get your own image badge on microbadger.com")
 
-#### A great looking and easy-to-use photo-management-system.
+[![](https://images.microbadger.com/badges/version/tlnk/lychee.svg)](https://microbadger.com/images/tlnk/lychee "Get your own version badge on microbadger.com")
 
-![Lychee](http://l.electerious.com/uploads/big/c4b58cb87d95aeaed78fdca581cc908c.jpg)
-![Lychee](http://l.electerious.com/uploads/big/075ac5de5b5d6c593acbb700f0e1d739.jpg)
+# lychee
 
-Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with everything you need and all your photos are stored securely. Try the [Live Demo](http://electerious.com/lychee_demo/) or read more on our [Website](http://lychee.electerious.com).
+![Screenshot](https://camo.githubusercontent.com/89386c42bade1e05e9de57d8d4f74bee699ffeab/687474703a2f2f6c2e656c6563746572696f75732e636f6d2f75706c6f6164732f6269672f63346235386362383764393561656165643738666463613538316363393038632e6a7067)
 
-## Installation
+# Supported tags and respective
 
-To run Lychee, everything you need is a web-server with PHP 5.5 or later and a MySQL-Database. Follow the instructions to install Lychee on your server. [Installation &#187;](docs/Installation.md)
+* latest [Dockerfile](https://github.com/tle06/Lychee/blob/master/Dockerfile)
 
-## How to use
+This image is updated via pull requests to the tle06/lychee GitHub repo.
 
-You can use Lychee right after the installation. Here are some advanced features to get the most out of it.
+# Sources
+[github/lychee](https://github.com/electerious/Lychee)
 
-### Settings
+# What is lychee
+Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with everything you need and all your photos are stored securely.
 
-Sign in and click the gear on the top left corner to change your settings. If you want to edit them manually: MySQL details are stored in `data/config.php`. Other options and hidden settings are stored directly in the database. [Settings &#187;](docs/Settings.md)
+# Image configuration
+## Package installed
+* git
+* apt-transport-https
+* apache2
+* libapache2-mod-php
+* php-gd
+* php-json
+* php-mysql
+* php-curl
+* php-zip
+* php-mbstring
 
-### Update
+## Port exposed
+* port 80
 
-Updating is as easy as it should be.  [Update &#187;](docs/Update.md)
+## Work dir
+* workdir = /var/www/lychee
 
-### Build
+# Available ENV variable
 
-Lychee is ready to use, right out of the box. If you want to contribute and edit CSS or JS files, you need to rebuild Lychee. [Build &#187;](docs/Build.md)
+* __FLOOD_BASEURI__ =/
+* __FLOOD_DBCLEANINTERVAL__ =1000*60*60
+* __FLOOD_DBPATH__ =./server/db/
+* __FLOOD_FLOODSERVERHOST__ =127.0.0.1
+* __FLOOD_FLOODSERVERPORT__ =3000
+* __FLOOD_MAXHISTORYSTATES__ =30
+* __FLOOD_POLLINTERVAL__ =1000*5
+* __FLOOD_SECRET=__ flood
+* __FLOOD_SCGIHOST__ =localhost
+* __FLOOD_SCGIPORT__ =5000
+* __FLOOD_SCGISOCKET__ =false
+* __FLOOD_SCGISOCKETPATCH__ =/tmp/rtorrent.sock
+* __FLOOD_SSL__ =false
+* __FLOOD_SSLKEY__ =/absolute/path/to/key/
+* __FLOOD_SSLCERT__ =/absolute/path/to/certificate/
+* __FLOOD_TORRENTCLIENTPOLLINTERVAL__ =1000*2
 
-### Keyboard Shortcuts
+* __PHP_UPLOAD_MAX_FILESIZE__ =100M
+* __PHP_POST_MAX_SIZE__ =100M
+* __PHP_MAX_EXCUTION_TIME__ =200
+* __PHP_MEMORY_LIMIT__ =256M
 
-These shortcuts will help you to use Lychee even faster. [Keyboard Shortcuts &#187;](docs/Keyboard Shortcuts.md)
+# How to use this image
+## Start lychee
 
-### Dropbox import
+Starting the lychee instance listening on port 80 is as easy as the following:
+``` Docker
 
-In order to use the Dropbox import from your server, you need a valid drop-ins app key from [their website](https://www.dropbox.com/developers/apps/create). Lychee will ask you for this key, the first time you try to use the import. Want to change your code? Take a look at [the settings](docs/Settings.md) of Lychee.
+$ docker run -d --restart=always -p 80:80 tlnk/lychee
 
-### Twitter Cards
+```
+Then go to http://localhost/ and go through the wizard.
 
-Lychee supports [Twitter Cards](https://dev.twitter.com/docs/cards) and [Open Graph](http://opengraphprotocol.org) for shared images ([not albums](https://github.com/electerious/Lychee/issues/384)). In order to use Twitter Cards you need to request an approval for your domain. Simply share an image with Lychee, copy its link and paste it in [Twitters Card Validator](https://dev.twitter.com/docs/cards/validation/validator).
+## Persistent data
 
-### Imagick
+* -v /`<mydatalocation>`:/uploads (Save all upload from lychee)
+* -v /`<mydatalocation>`:/data (save configuration file from lychee)
 
-Lychee uses [Imagick](http://www.imagemagick.org) when installed on your server. In this case you will benefit from a faster processing of your uploads, better looking thumbnails and intermediate sized images for small screen devices. You can disable the usage of [Imagick](http://www.imagemagick.org) in [the settings](docs/Settings.md).
+## Via docker-compose
 
-### Docker
+```
+Docker
+version: '2'
 
-Browse the [Docker Hub Registry](https://hub.docker.com/r/kdelfour/lychee-docker/) for various automated Lychee-Docker builds. We recommed to use [lychee-docker](https://hub.docker.com/r/kdelfour/lychee-docker/) by [kdelfour](https://github.com/kdelfour).
+services:
 
-### Plugins and Extensions
+lychee:
+ image: tlnk/lychee
+ ports:
+   - 80:80
 
-The plugin-system of Lychee allows you to execute scripts, when a certain action fires. Plugins are hooks, which are injected directly into Lychee. [Plugin documentation &#187;](docs/Plugins.md)
-
-It's also possible to build extensions upon Lychee. The way to do so isn't documented and can change every time. We recommend to use the plugin-system, when possible.
-
-Here's a list of all available Plugins and Extensions:
-
-| Name | Description | |
-|:-----------|:------------|:------------|
-| lycheesync | Sync Lychee with any directory containing photos | [More &#187;](https://github.com/GustavePate/lycheesync) |
-| lycheeupload | Upload photos to Lychee via SSH | [More &#187;](https://github.com/r0x0r/lycheeupload) |
-| Jekyll | Liquid tag for Jekyll sites that allows embedding Lychee albums | [More &#187;](https://gist.github.com/tobru/9171700) |
-| lychee-redirect | Redirect from an album-name to a Lychee-album | [More &#187;](https://github.com/electerious/lychee-redirect) |
-| lychee-watermark | Adds a second watermarked photo when uploading images | [More &#187;](https://github.com/electerious/lychee-watermark) |
-| lychee-rss | Creates a RSS-Feed out of your photos | [More &#187;](https://github.com/cternes/Lychee-RSS) |
-| lychee-FlashAir | Import from a Toshiba FlashAir WiFi SD card | [More &#187;](https://github.com/mhp/Lychee-FlashAir) |
-| lychee-webroot | Controls photos accessibility and keeps Lychee files hidden | [More &#187;](https://github.com/Bramas/lychee-webroot) |
-| lychee-create-medium | Generate missing medium size photos | [More &#187;](https://github.com/Bramas/lychee-create-medium) |
-
-## Troubleshooting
-
-Take a look at the [FAQ](docs/FAQ.md) if you have problems. Discovered a bug? Please create an issue here on GitHub!
-
-## Donate
-
-I am working hard on continuously developing and maintaining Lychee. Please consider making a donation via [Flattr](https://flattr.com/submit/auto?user_id=electerious&url=http%3A%2F%2Flychee.electerious.com&title=Lychee&category=software) or PayPal (from [our site](http://lychee.electerious.com/)) to keep the project going strong and me motivated.
+```
