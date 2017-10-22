@@ -1,66 +1,54 @@
 #Dockerfile lychee
-FROM ubuntu:14.04
+FROM tlnk/ubuntu:latest
 MAINTAINER tlnk <support@tlnk.fr>
 
-ENV PHP_UPLOAD_MAX_FILESIZE 100M
-ENV PHP_POST_MAX_SIZE 100M
-ENV PHP_MAX_EXCUTION_TIME 200
-ENV PHP_MEMORY_LIMIT 256M
+
+ARG VERSION
+ARG BUILD_DATE
+ARG VCS_REF
+
+EXPOSE 80
 
 #Install source + packages
-RUN \
-export LANG=C.UTF-8 && \
+RUN export LANG=C.UTF-8 && \
 apt-get update && \
 apt-get upgrade -y && \
 apt-get install -y \
 apt-transport-https \
-nano \
-wget \
-unzip \
 apache2 \
 php5 \
 php5-cli \
 php5-gd \
 php5-common \
 php5-mysql \
-php5-curl && \
-rm -rf /var/lib/apt/lists/* && \
-mkdir /App
+php5-curl
 
 #Setup site.conf and app
-COPY . /App
-COPY lychee.conf /etc/apache2/sites-available/lychee.conf
+COPY lychee.conf /etc/apache2/sites-available/000-default.conf
+COPY entrypoint /entrypoint
 
-RUN  mkdir /var/www/lychee && \
-cp -r /App/* /var/www/lychee/ && \
+RUN  git clone https://github.com/electerious/Lychee.git /var/www/lychee && \
 chown -R www-data:www-data /var/www/lychee/ && \
-chmod -R 777 /var/www/lychee/uploads /var/www/lychee/data
-
-#edit php.ini
-RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/g" /etc/php5/apache2/php.ini && \
-sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = $PHP_POST_MAX_SIZE/g" /etc/php5/apache2/php.ini && \
-sed -i -e "s/max_execution_time\s*=\s*30/max_execution_time = $PHP_MAX_EXCUTION_TIME/g" /etc/php5/apache2/php.ini && \
-sed -i -e "s/memory_limit\s*=\s*128M/memory_limit = $PHP_MEMORY_LIMIT/g" /etc/php5/apache2/php.ini
-
-#edit config.php
-# RUN  sed -i -e "s/$dbHost =\s*''/$dbHost = '$MYSQL_HOST'/g" /var/www/leechy/data/config.php && \
-# sed -i -e "s/$dbUser =\s*''/$dbUser =  '$MYSQL_USERNAME'/g" /var/www/leechy/data/config.php && \
-# sed -i -e "s/$dbPassword =\s*''/$dbPassword = '$MYSQL_PASSWORD'/g" /var/www/leechy/data/config.php && \
-# sed -i -e "s/$dbName =\s*''/$dbName = '$MYSQL_DB_NAME'/g" /var/www/leechy/data/config.php
-
-#Load apache module
-RUN a2enmod rewrite && \
-ln -s /etc/apache2/sites-available/lychee.conf /etc/apache2/sites-enabled/lychee.conf && \
-echo "serverName localhost" >> /etc/apache2/apache2.conf
+chmod -R 777 /var/www/lychee/uploads /var/www/lychee/data && \
+a2enmod rewrite && \
+echo "serverName localhost" >> /etc/apache2/apache2.conf && \
+chmod +x /entrypoint/*sh && \
+chmod +x /entrypoint/entrypoint.d/*.sh
 
 #Cleaning
-RUN rm /etc/apache2/sites-enabled/000-default.conf && \
-rm -rf /App && \
-apt-get clean && \
-service apache2 restart
+RUN apt-get clean && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/apache2/sites-available/default-ssl.conf && \
+rm -rf /var/www/html
 
 
 WORKDIR /var/www/lychee
-EXPOSE 80
+ENTRYPOINT ["/bin/bash", "/entrypoint/entrypoint.sh"]
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
-ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+LABEL org.label-schema.version=$VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE
+LABEL org.label-schema.vcs-ref=$VCS_REF
+LABEL org.label-schema.vcs-url="https://github.com/tle06/Lychee.git"
+LABEL org.label-schema.name="lychee"
+LABEL org.label-schema.vendor="lychee"
+LABEL org.label-schema.schema-version="1.0"
