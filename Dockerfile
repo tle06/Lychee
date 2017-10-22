@@ -20,6 +20,7 @@ RUN apt-get update && \
         php-mysql \
         php-curl \
         php-zip \
+        php-imagick \
         php-mbstring
 
 #Setup site.conf and app
