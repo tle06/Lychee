@@ -22,7 +22,7 @@ RUN apt-get update && \
         php-mysql \
         php-curl \
         php-zip \
-        php-mbstring \
+        php-mbstring
 
 #Setup site.conf and app
 COPY lychee.conf /etc/apache2/sites-available/000-default.conf
