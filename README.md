@@ -47,10 +47,9 @@ Lychee is a free photo-management tool, which runs on your server or web-space. 
 
 Starting the lychee instance listening on port 80 is as easy as the following:
 ``` Docker
-
 $ docker run -d --restart=always -p 80:80 tlnk/lychee
-
 ```
+
 Then go to http://localhost/ and go through the wizard.
 
 ## Persistent data
