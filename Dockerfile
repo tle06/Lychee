@@ -1,7 +1,5 @@
 #Dockerfile lychee
 FROM tlnk/ubuntu:latest
-MAINTAINER tlnk <support@tlnk.fr>
-
 
 ARG VERSION
 ARG BUILD_DATE
@@ -47,6 +45,7 @@ WORKDIR /var/www/lychee
 ENTRYPOINT ["/bin/bash", "/entrypoint/entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
+LABEL maintainer="support@tlnk.fr"
 LABEL org.label-schema.version=$VERSION
 LABEL org.label-schema.build-date=$BUILD_DATE
 LABEL org.label-schema.vcs-ref=$VCS_REF
