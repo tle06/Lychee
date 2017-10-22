@@ -1,6 +1,4 @@
-[![](https://images.microbadger.com/badges/image/tlnk/lychee.svg)](https://microbadger.com/images/tlnk/lychee "Get your own image badge on microbadger.com")
-
-[![](https://images.microbadger.com/badges/version/tlnk/lychee.svg)](https://microbadger.com/images/tlnk/lychee "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/tlnk/lychee.svg)](https://microbadger.com/images/tlnk/lychee "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/tlnk/lychee.svg)](https://microbadger.com/images/tlnk/lychee "Get your own version badge on microbadger.com")
 
 # Lychee
 
@@ -38,23 +36,6 @@ Lychee is a free photo-management tool, which runs on your server or web-space. 
 * workdir = /var/www/lychee
 
 # Available ENV variable
-
-* __FLOOD_BASEURI__ =/
-* __FLOOD_DBCLEANINTERVAL__ =1000*60*60
-* __FLOOD_DBPATH__ =./server/db/
-* __FLOOD_FLOODSERVERHOST__ =127.0.0.1
-* __FLOOD_FLOODSERVERPORT__ =3000
-* __FLOOD_MAXHISTORYSTATES__ =30
-* __FLOOD_POLLINTERVAL__ =1000*5
-* __FLOOD_SECRET=__ flood
-* __FLOOD_SCGIHOST__ =localhost
-* __FLOOD_SCGIPORT__ =5000
-* __FLOOD_SCGISOCKET__ =false
-* __FLOOD_SCGISOCKETPATCH__ =/tmp/rtorrent.sock
-* __FLOOD_SSL__ =false
-* __FLOOD_SSLKEY__ =/absolute/path/to/key/
-* __FLOOD_SSLCERT__ =/absolute/path/to/certificate/
-* __FLOOD_TORRENTCLIENTPOLLINTERVAL__ =1000*2
 
 * __PHP_UPLOAD_MAX_FILESIZE__ =100M
 * __PHP_POST_MAX_SIZE__ =100M
